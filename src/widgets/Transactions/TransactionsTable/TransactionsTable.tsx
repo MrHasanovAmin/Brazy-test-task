@@ -12,7 +12,7 @@ const networkColors: Record<TransactionNetwork, string> = {
 }
 
 function TransactionsTable() {
-  const { transactions, status, hasFilters, loadTransactions } = useTransactionsContext()
+  const { filteredTransactions, status, hasFilters, loadTransactions } = useTransactionsContext()
   const [modalTransaction, setModalTransaction] = useState<Transaction | null>(null)
 
   if (status === "loading") {
@@ -23,7 +23,7 @@ function TransactionsTable() {
     )
   }
 
-  if (transactions.length === 0 && status === "success") {
+  if (filteredTransactions.length === 0 && status === "success") {
     return (
       <Flex justify="center" align="center">
         <Empty
@@ -50,7 +50,7 @@ function TransactionsTable() {
   return (
     <>
       <Table
-        dataSource={transactions}
+        dataSource={filteredTransactions}
         rowKey="id"
         size="middle"
         pagination={{ pageSize: 10, placement: ['bottomCenter'], }}

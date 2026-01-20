@@ -2,11 +2,11 @@ import { createContext, useContext } from 'react'
 import type { ContextStatus, Transaction } from '../type'
 
 interface TransactionsContextValue {
-  transactions: Transaction[]
+  filteredTransactions: Transaction[]
   status: ContextStatus
   loadTransactions: () => void
   hasFilters: boolean
-  transactionsIds: string[]
+  transactions: Transaction[]
 }
 
 

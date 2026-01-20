@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { AutoComplete, Button, DatePicker, Flex, Select } from "antd"
 import dayjs from "dayjs";
 import Collapsed from "../../../shared/components/Collapse/Collapse"
 import { useTransactionsContext, type TransactionStatus, type TransactionType } from "../../../features/transactions";
 import type { TransactionsParams } from "../../../features/transactions/type";
-import { useDebounce } from "../../../shared/hooks/useDebounce";
+import { debounce } from "../../../shared/components/utils/debounce";
 
 const today = dayjs();
 
@@ -35,25 +35,27 @@ const initialFilters: Record<keyof TransactionsParams, string> = {
 }
 
 function TransactionsFilter() {
-  const { transactionsIds } = useTransactionsContext()
+  const { transactions } = useTransactionsContext()
   const [searchParams, setSearchParams] = useSearchParams()
-  const id = searchParams.get("id") ?? initialFilters.id;
-  const [localId, setLocalId] = useState(id)
-  const debouncedId = useDebounce(localId, 500)
+  const queryId = searchParams.get("id") ?? initialFilters.id;
+  const [localId, setLocalId] = useState(queryId)
 
-  const type = (searchParams.get("type") ?? initialFilters.type) as TransactionTypeValue;
-  const status = (searchParams.get("status") ?? initialFilters.status) as TransactionStatusValue;
-  const from = searchParams.get("createdFrom") ?? initialFilters.createdFrom;
-  const to = searchParams.get("createdTo") ?? initialFilters.createdTo;
+  const queryType = (searchParams.get("type") ?? initialFilters.type) as TransactionTypeValue;
+  const queryStatus = (searchParams.get("status") ?? initialFilters.status) as TransactionStatusValue;
+  const queryFromDate = searchParams.get("createdFrom") ?? initialFilters.createdFrom;
+  const queryToDate = searchParams.get("createdTo") ?? initialFilters.createdTo;
 
   const idOptions =
-    transactionsIds
-      .filter(transactionId => transactionId.toLowerCase().includes(localId.toLowerCase()))
-      .map((id => ({ value: id })))
+    transactions
+      .filter(({ id: transactionId }) => transactionId.toLowerCase().includes(localId.toLowerCase()))
+      .map(({ id }) => ({ value: id }))
 
-
-  const handleParamsChange: <T extends string>(arg: T, key: keyof TransactionsParams) => void = (value, key) => {
+  const handleParamsChange: <T extends string>(arg: T, key: keyof TransactionsParams) => void = useCallback((value, key) => {
     setSearchParams((prevParams) => {
+      if (prevParams.get(key) === value) {
+        return prevParams
+      }
+
       if (value !== 'all' && value !== "") {
         prevParams.set(key, value)
       } else {
@@ -62,7 +64,9 @@ function TransactionsFilter() {
 
       return prevParams
     })
-  }
+  }, [setSearchParams])
+
+  const debauncedHandleParamsChange = useMemo(() => debounce(handleParamsChange, 500), [handleParamsChange]);
 
   const handleDateParamsChange = (date: [string, string] | null) => {
     setSearchParams((prevParams) => {
@@ -83,18 +87,12 @@ function TransactionsFilter() {
     setSearchParams({})
   }
 
-  useEffect(() => {
-    if (localId !== id) {
-      handleParamsChange(debouncedId, "id")
-    }
-  }, [debouncedId])
-
   return (
     <Collapsed label="Filter">
       <Flex justify="space-between">
         <Flex gap="8px" align="center">
           <Select<TransactionTypeValue>
-            value={type}
+            value={queryType}
             onChange={(value) => handleParamsChange<TransactionTypeValue>(value, "type")}
             style={{ width: 110 }}
           >
@@ -105,7 +103,7 @@ function TransactionsFilter() {
             ))}
           </Select>
           <Select<TransactionStatusValue>
-            value={status}
+            value={queryStatus}
             onChange={(value) => handleParamsChange<TransactionStatusValue>(value, "status")}
             style={{ width: 100 }}
           >
@@ -119,14 +117,20 @@ function TransactionsFilter() {
             value={localId}
             options={idOptions}
             style={{ width: 120 }}
-            onSelect={(value) => setLocalId(value)}
-            onChange={(value) => setLocalId(value)}
+            onSelect={(value) => {
+              setLocalId(value)
+              debauncedHandleParamsChange(value, "id")
+            }}
+            onChange={(value) => {
+              setLocalId(value)
+              debauncedHandleParamsChange(value, "id")
+            }}
             placeholder="Transaction ID"
           />
         </Flex>
         <Flex gap="8px">
           <DatePicker.RangePicker
-            value={from && to ? [dayjs(from), dayjs(to)] : null}
+            value={queryFromDate && queryToDate ? [dayjs(queryFromDate), dayjs(queryToDate)] : null}
             disabledDate={(current) => current && current > today.endOf('day')}
             onChange={(_, dates) => { handleDateParamsChange(dates) }}
           />

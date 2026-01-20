@@ -1,9 +1,9 @@
+import dayjs from "dayjs"
 import { useCallback, useMemo, useState, type ReactNode } from "react"
+import { useSearchParams } from "react-router-dom"
 import type { ContextStatus, Transaction, TransactionStatus, TransactionType } from "../type"
 import { fetchTransactions } from "../../../api"
 import { TransactionsContext } from "./transactionsContext"
-import { useSearchParams } from "react-router-dom"
-import dayjs from "dayjs"
 
 interface TransactionsProviderProps {
   children: ReactNode
@@ -20,10 +20,6 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const createdFrom = searchParams.get('createdFrom')
   const createdTo = searchParams.get('createdTo')
   const hasFilters = !!(id || type || statusParam || createdFrom || createdTo)
-
-  const transactionsIds = useMemo(() => {
-    return transactions.map(transaction => transaction.id)
-  }, [transactions])
 
   const filteredTransactions = useMemo(() => {
     if (hasFilters) {
@@ -57,7 +53,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   return (
     <TransactionsContext.Provider value={{
-      transactions: filteredTransactions, status, loadTransactions, hasFilters, transactionsIds
+      filteredTransactions, transactions, status, loadTransactions, hasFilters,
     }}>
       {children}
     </TransactionsContext.Provider>
