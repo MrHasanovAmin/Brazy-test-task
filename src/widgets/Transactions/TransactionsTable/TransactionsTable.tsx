@@ -6,6 +6,10 @@ import TransactionsDetailModal from "../TransactionsDetailModal/TransactionsDeta
 import StatusTag from "../../../shared/components/StatusTag/StatusTag"
 import TransactionAmount from "../../../features/transactions/components/TransactionAmount/TransactionAmount"
 
+/*
+  В теории можно было бы вынести в разные компоненты страницы статусов.
+  Модальное окно деталей вызывается в таблице чтобы не триггерить всю страницу транзакций 
+*/
 const networkColors: Record<TransactionNetwork, string> = {
   blockchain: "orange",
   internal: 'blue'

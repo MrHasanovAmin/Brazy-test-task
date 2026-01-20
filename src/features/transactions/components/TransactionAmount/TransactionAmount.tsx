@@ -1,6 +1,10 @@
 import { Typography } from "antd"
 import type { TransactionCurrency, TransactionType } from "../../type"
 
+/*
+  В теории можно было бы разместить в shared, но тогда надо было бы создавать shared/types так что в данной реализации тут
+*/
+
 interface TransactionAmountProps {
   amount: number,
   type: TransactionType,

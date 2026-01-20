@@ -5,6 +5,10 @@ import type { ContextStatus, Transaction, TransactionStatus, TransactionType } f
 import { fetchTransactions } from "../../../api"
 import { TransactionsContext } from "./transactionsContext"
 
+/*
+  Провайдер контекста транзакций отсюда раздаются статусы, фильтруются транзакции и загружаются из API
+*/
+
 interface TransactionsProviderProps {
   children: ReactNode
 }

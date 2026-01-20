@@ -1,5 +1,8 @@
 import { MOCK_TRANSACTIONS } from './data.js'
 
+/*
+  асинхронно выдает моковые транзакции с случайной задержкой и с вероятностью ошибки 10%
+*/
 const getRandomDelay = () => {
   return 500 + Math.random() * 300
 }

@@ -9,6 +9,10 @@ import { debounce } from "../../../shared/components/utils/debounce";
 
 const today = dayjs();
 
+/*
+  В теории можно было бы вынести в features селекторы и их константы
+*/
+
 type TransactionTypeValue = TransactionType | 'all';
 type TransactionStatusValue = TransactionStatus | 'all';
 

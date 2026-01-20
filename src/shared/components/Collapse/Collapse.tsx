@@ -1,5 +1,8 @@
 import { Collapse } from "antd"
 
+/*
+  синтаксический сахар чтобы удобнее было использовать Collapse
+*/
 interface CollapseProps {
   children: React.ReactNode
   label: string

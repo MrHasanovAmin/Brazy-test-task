@@ -1,6 +1,10 @@
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined, PlusCircleOutlined } from "@ant-design/icons"
 import { Tag } from "antd"
 
+/*
+  В теории можно было бы разместить в features, но статусы могут быть и в других модулях так что shared
+*/
+
 type status = 'created' | 'pending' | 'success' | 'failed'
 
 interface StatusTagProps {
