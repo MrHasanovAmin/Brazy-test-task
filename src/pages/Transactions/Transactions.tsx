@@ -10,7 +10,7 @@ function Transactions() {
 
   useEffect(() => {
     loadTransactions()
-  }, [])
+  }, [loadTransactions])
 
   return (
     <div className={styles.component}>
