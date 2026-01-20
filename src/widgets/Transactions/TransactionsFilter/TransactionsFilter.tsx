@@ -132,7 +132,7 @@ function TransactionsFilter() {
           <Button onClick={handleParamsReset}>Reset</Button>
         </Flex>
       </Flex>
-    </Collapsed >
+    </Collapsed>
   )
 }
 
