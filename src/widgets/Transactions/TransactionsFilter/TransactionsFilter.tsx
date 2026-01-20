@@ -35,7 +35,7 @@ const initialFilters: Record<keyof TransactionsParams, string> = {
 }
 
 function TransactionsFilter() {
-  const { transactions } = useTransactionsContext()
+  const { transactions, hasFilters } = useTransactionsContext()
   const [searchParams, setSearchParams] = useSearchParams()
   const queryId = searchParams.get("id") ?? initialFilters.id;
   const [localId, setLocalId] = useState(queryId)
@@ -83,8 +83,10 @@ function TransactionsFilter() {
   }
 
   const handleParamsReset = () => {
-    setLocalId('')
-    setSearchParams({})
+    if (hasFilters) {
+      setLocalId('')
+      setSearchParams({})
+    }
   }
 
   return (
