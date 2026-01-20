@@ -13,7 +13,7 @@ const networkColors: Record<TransactionNetwork, string> = {
 
 function TransactionsTable() {
   const { transactions, status, hasFilters, loadTransactions } = useTransactionsContext()
-  const [activeTransactionModal, setActiveTransactionModal] = useState<Transaction | null>(null)
+  const [modalTransaction, setModalTransaction] = useState<Transaction | null>(null)
 
   if (status === "loading") {
     return (
@@ -53,10 +53,10 @@ function TransactionsTable() {
         dataSource={transactions}
         rowKey="id"
         size="middle"
-        pagination={{ pageSize: 10, position: ['bottomCenter'], }}
+        pagination={{ pageSize: 10, placement: ['bottomCenter'], }}
         onRow={(record: Transaction) => ({
           onClick: () => {
-            setActiveTransactionModal(record)
+            setModalTransaction(record)
           },
           style: { cursor: 'pointer' }
         })}
@@ -120,9 +120,9 @@ function TransactionsTable() {
         />
       </Table>
       <TransactionsDetailModal
-        transaction={activeTransactionModal!}
-        isOpen={!!activeTransactionModal}
-        onClose={() => setActiveTransactionModal(null)}
+        transaction={modalTransaction!}
+        isOpen={!!modalTransaction}
+        onClose={() => setModalTransaction(null)}
       />
     </>
   )

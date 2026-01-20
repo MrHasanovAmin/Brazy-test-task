@@ -6,6 +6,7 @@ interface TransactionsContextValue {
   status: ContextStatus
   loadTransactions: () => void
   hasFilters: boolean
+  transactionsIds: string[]
 }
 
 

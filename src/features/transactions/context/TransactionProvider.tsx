@@ -21,11 +21,15 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const createdTo = searchParams.get('createdTo')
   const hasFilters = !!(id || type || statusParam || createdFrom || createdTo)
 
+  const transactionsIds = useMemo(() => {
+    return transactions.map(transaction => transaction.id)
+  }, [transactions])
+
   const filteredTransactions = useMemo(() => {
     if (hasFilters) {
       return (
         transactions.filter(transaction => (
-          (id ? transaction.id === id : true) &&
+          (id ? transaction.id.toLowerCase().includes(id.toLowerCase()) : true) &&
           (type ? transaction.type === type : true) &&
           (statusParam ? transaction.status === statusParam : true) &&
           (createdFrom ? dayjs(transaction.createdAt).isAfter(dayjs(createdFrom)) : true) &&
@@ -53,7 +57,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   return (
     <TransactionsContext.Provider value={{
-      transactions: filteredTransactions, status, loadTransactions, hasFilters
+      transactions: filteredTransactions, status, loadTransactions, hasFilters, transactionsIds
     }}>
       {children}
     </TransactionsContext.Provider>

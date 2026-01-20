@@ -3,6 +3,7 @@ import { useTransactionsContext } from "../../features/transactions"
 import TransactionsTable from "../../widgets/Transactions/TransactionsTable/TransactionsTable"
 
 import styles from './Transactions.module.scss'
+import TransactionsFilter from "../../widgets/Transactions/TransactionsFilter/TransactionsFilter"
 
 function Transactions() {
   const { loadTransactions } = useTransactionsContext()
@@ -13,7 +14,7 @@ function Transactions() {
 
   return (
     <div className={styles.component}>
-      <div></div>
+      <TransactionsFilter />
       <TransactionsTable />
     </div>
   )

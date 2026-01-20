@@ -1,5 +1,5 @@
 export type TransactionStatus = 'pending' | 'success' | 'failed';
-export type TransactionType = 'deposit' | 'withdrawal';
+export type TransactionType = 'deposit' | 'withdraw';
 export type TransactionNetwork = 'blockchain' | 'internal';
 export type TransactionCurrency = 'USD' | 'EU' | 'RUB';
 export type ContextStatus = 'init' | 'loading' | 'success' | 'error'
@@ -23,5 +23,6 @@ export interface TransactionsParams {
   id: string | null,
   type: TransactionType | null,
   status: TransactionStatus | null,
-  createdAt: string | null,
+  createdFrom: string | null,
+  createdTo: string | null,
 }
