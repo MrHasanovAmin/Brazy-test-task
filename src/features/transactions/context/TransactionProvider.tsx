@@ -19,9 +19,10 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const statusParam = searchParams.get('status') as TransactionStatus | null
   const createdFrom = searchParams.get('createdFrom')
   const createdTo = searchParams.get('createdTo')
+  const hasFilters = !!(id || type || statusParam || createdFrom || createdTo)
 
   const filteredTransactions = useMemo(() => {
-    if (id || type || statusParam || createdFrom || createdTo) {
+    if (hasFilters) {
       return (
         transactions.filter(transaction => (
           (id ? transaction.id === id : true) &&
@@ -31,10 +32,10 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
           (createdTo ? dayjs(transaction.createdAt).isBefore(dayjs(createdTo)) : true)
         ))
       )
-    } else {
-      return transactions
     }
-  }, [id, type, statusParam, createdFrom, createdTo, transactions])
+    return transactions
+
+  }, [id, type, statusParam, createdFrom, createdTo, transactions, hasFilters])
 
   const loadTransactions = useCallback(
     async () => {
@@ -52,7 +53,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   return (
     <TransactionsContext.Provider value={{
-      transactions: filteredTransactions, status, loadTransactions
+      transactions: filteredTransactions, status, loadTransactions, hasFilters
     }}>
       {children}
     </TransactionsContext.Provider>

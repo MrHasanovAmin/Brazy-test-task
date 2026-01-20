@@ -1,5 +1,8 @@
 import { useEffect } from "react"
 import { useTransactionsContext } from "../../features/transactions"
+import TransactionsTable from "../../widgets/Transactions/TransactionsTable/TransactionsTable"
+
+import styles from './Transactions.module.scss'
 
 function Transactions() {
   const { loadTransactions } = useTransactionsContext()
@@ -9,7 +12,10 @@ function Transactions() {
   }, [])
 
   return (
-    <div>transactions</div>
+    <div className={styles.component}>
+      <div></div>
+      <TransactionsTable />
+    </div>
   )
 }
 

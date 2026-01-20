@@ -1,0 +1,6 @@
+.component {
+  display: grid;
+  min-height: var(--app-height);
+  grid-template-rows: auto 1fr;
+  padding: 16px;
+}

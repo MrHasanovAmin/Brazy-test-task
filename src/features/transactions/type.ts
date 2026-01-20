@@ -1,6 +1,6 @@
 export type TransactionStatus = 'pending' | 'success' | 'failed';
 export type TransactionType = 'deposit' | 'withdrawal';
-export type TransactionNetwork = 'blockchain' | 'bank' | 'paypal';
+export type TransactionNetwork = 'blockchain' | 'internal';
 export type Currency = 'USD' | 'EU' | 'RUB';
 export type ContextStatus = 'init' | 'loading' | 'success' | 'error'
 export type Sort = 'ascending' | 'descending';
