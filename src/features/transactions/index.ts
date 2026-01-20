@@ -2,7 +2,7 @@ export {
   type TransactionStatus,
   type TransactionType,
   type TransactionNetwork,
-  type Currency,
+  type TransactionCurrency as Currency,
   type Transaction,
 } from './type'
 
