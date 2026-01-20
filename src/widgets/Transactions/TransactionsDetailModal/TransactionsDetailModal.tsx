@@ -1,6 +1,6 @@
 import { Descriptions, Modal } from "antd"
-import type { Transaction } from "../../../features/transactions"
 import dayjs from "dayjs"
+import type { Transaction } from "../../../features/transactions"
 import StatusTag from "../../../shared/components/StatusTag/StatusTag"
 import TransactionAmount from "../../../features/transactions/components/TransactionAmount/TransactionAmount"
 
