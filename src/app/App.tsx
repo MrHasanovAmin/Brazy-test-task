@@ -3,17 +3,14 @@ import { TransactionsProvider } from '../features/transactions/context/Transacti
 import Transactions from '../pages/Transactions/Transactions'
 import './App.scss'
 
-// Необходимости настраивать роуты не было, добавил его как базовую настройку App.
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={
-          <TransactionsProvider>
-            <Transactions />
-          </TransactionsProvider>
-        } />
-      </Routes>
+      <TransactionsProvider>
+        <Routes>
+          <Route path="/" element={<Transactions />} />
+        </Routes>
+      </TransactionsProvider>
     </BrowserRouter>
   )
 }
