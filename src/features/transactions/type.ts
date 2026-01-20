@@ -1,4 +1,4 @@
-export type TransactionStatus = 'pending' | 'success' | 'failed';
+export type TransactionStatus = 'created' | 'pending' | 'success' | 'failed';
 export type TransactionType = 'deposit' | 'withdraw';
 export type TransactionNetwork = 'blockchain' | 'internal';
 export type TransactionCurrency = 'USD' | 'EU' | 'RUB';

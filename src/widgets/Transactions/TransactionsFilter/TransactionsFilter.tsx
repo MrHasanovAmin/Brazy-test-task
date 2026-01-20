@@ -23,6 +23,7 @@ const TransactionsStatus: { label: string; value: TransactionStatusValue }[] = [
   { label: "Failed", value: "failed" },
   { label: "Pending", value: "pending" },
   { label: "Success", value: "success" },
+  { label: "Created", value: "created" },
 ]
 
 const initialFilters: Record<keyof TransactionsParams, string> = {
